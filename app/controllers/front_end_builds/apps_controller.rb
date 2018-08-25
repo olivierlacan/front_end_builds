@@ -2,7 +2,11 @@ require_dependency "front_end_builds/application_controller"
 
 module FrontEndBuilds
   class AppsController < ApplicationController
-    before_filter :set_app , :only => [:show, :destroy, :update]
+    if Rails.version > "5.0"
+      before_action :set_app, only: [:show, :destroy, :update]
+    else
+      before_filter :set_app, only: [:show, :destroy, :update]
+    end
 
     def index
       apps = App.includes(:recent_builds)

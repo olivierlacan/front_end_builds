@@ -11,7 +11,11 @@ module FrontEndBuilds
   class BestsController < ApplicationController
     include Rails.application.routes.url_helpers
 
-    before_filter :find_front_end, only: [:show]
+    if Rails.version > "5.0"
+      before_action :find_front_end, only: [:show]
+    else
+      before_filter :find_front_end, only: [:show]
+    end
 
     def show
       if @front_end
